@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- Arctic: Zephyr Reloaded — HEAVY mode pre-configuration -->
+
+  <!-- Performance mode: full quality for PC / Nvidia Shield -->
+  <setting id="LowPowerMode">false</setting>
+  <setting id="EnableAnimations">true</setting>
+  <setting id="EnableFanart">true</setting>
+  <setting id="EnableExtraFanart">true</setting>
+  <setting id="EnableClearLogo">true</setting>
+  <setting id="EnableVideoBackgrounds">true</setting>
+  <setting id="EnableBusyDialogBackground">true</setting>
+
+  <!-- Home menu: use skinshortcuts (reads mainmenu.DATA.xml) -->
+  <setting id="HomeMenuType">skinshortcuts</setting>
+
+  <!-- Widget behaviour -->
+  <setting id="HomeWidgetRefreshOnFocus">true</setting>
+  <setting id="HomeWidgetCount">3</setting>
+
+  <!-- Info panels -->
+  <setting id="ShowPlot">true</setting>
+  <setting id="ShowRatings">true</setting>
+  <setting id="ShowTrakt">true</setting>
+</settings>

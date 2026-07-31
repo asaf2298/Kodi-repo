@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- Arctic: Zephyr Reloaded — LIGHT mode pre-configuration -->
+
+  <!-- Performance mode: low-power for Android TV / FireStick -->
+  <setting id="LowPowerMode">true</setting>
+  <setting id="EnableAnimations">false</setting>
+  <setting id="EnableFanart">false</setting>
+  <setting id="EnableExtraFanart">false</setting>
+  <setting id="EnableClearLogo">false</setting>
+  <setting id="EnableVideoBackgrounds">false</setting>
+  <setting id="EnableBusyDialogBackground">false</setting>
+
+  <!-- Home menu: use skinshortcuts (reads mainmenu.DATA.xml) -->
+  <setting id="HomeMenuType">skinshortcuts</setting>
+
+  <!-- Widget behaviour -->
+  <setting id="HomeWidgetRefreshOnFocus">false</setting>
+  <setting id="HomeWidgetCount">1</setting>
+
+  <!-- Info panels -->
+  <setting id="ShowPlot">true</setting>
+  <setting id="ShowRatings">true</setting>
+  <setting id="ShowTrakt">true</setting>
+</settings>

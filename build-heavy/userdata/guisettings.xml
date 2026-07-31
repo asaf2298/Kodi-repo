@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings version="2">
+
+  <!-- Skin -->
+  <setting id="lookandfeel.skin">skin.arctic.zephyr.mod</setting>
+  <setting id="lookandfeel.skintheme">SKINDEFAULT</setting>
+  <setting id="lookandfeel.skincolors">SKINDEFAULT</setting>
+  <setting id="lookandfeel.font">Default</setting>
+
+  <!-- Arctic Zephyr Mod — Heavy / Full quality mode -->
+  <!-- Fanart, animations and full metadata enabled for powerful devices -->
+  <setting id="lookandfeel.enablerssfeeds">false</setting>
+  <setting id="videolibrary.showunwatchedplots">true</setting>
+
+  <!-- Language / Locale -->
+  <setting id="locale.language">resource.language.he_il</setting>
+  <setting id="locale.country">IL</setting>
+  <setting id="locale.timezone">Asia/Jerusalem</setting>
+  <setting id="locale.shortdateformat">DD/MM/YYYY</setting>
+  <setting id="locale.longdateformat">DDDD, D MMMM YYYY</setting>
+  <setting id="locale.timeformat">HH:mm:ss</setting>
+
+  <!-- Subtitles -->
+  <setting id="subtitles.languages">Hebrew</setting>
+  <setting id="subtitles.tv">1</setting>
+  <setting id="subtitles.movie">1</setting>
+
+  <!-- Playback — high quality -->
+  <setting id="videoplayer.adjustrefreshrate">2</setting>
+  <setting id="videoplayer.usemediacodec">false</setting>
+  <setting id="videoplayer.usemediacodecsurface">false</setting>
+  <setting id="videoplayer.hqscalers">10</setting>
+
+  <!-- Addons -->
+  <setting id="general.addonupdates">0</setting>
+  <setting id="general.addonnotifications">true</setting>
+
+</settings>
