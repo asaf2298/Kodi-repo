@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.personal" name="Personal - צפייה מרוכזת" version="1.5.0" provider-name="Personal Build">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="he">Personal - צפייה מרוכזת</summary>
+    <description lang="he">תוסף פרטי המתחבר לשרת Personal (Vercel) - סרטים, סדרות, אנימה ושידור חי, עם התאמת סקין אוטומטית</description>
+    <platform>all</platform>
+    <license>Private</license>
+    <icon>icon.png</icon>
+  </extension>
+</addon>

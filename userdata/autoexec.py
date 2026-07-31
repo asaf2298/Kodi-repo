@@ -1,21 +1,35 @@
-# userdata/autoexec.py — runs once on every Kodi boot
+# userdata/autoexec.py
+# Personal Build — One-Shot Boot Automation
+# Copy this file to: Kodi/userdata/autoexec.py
+# Runs automatically every time Kodi starts.
+
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-def check_trakt():
+
+def check_trakt_auth():
+    """Trigger Trakt authorization if token is missing."""
     try:
         trakt = xbmcaddon.Addon("script.trakt")
         token = trakt.getSetting("authorization.token")
-        if not token:
-            xbmc.sleep(3000)  # Wait for UI to settle
+        if not token or token.strip() == "":
+            xbmc.sleep(4000)  # Wait for Kodi UI to fully load
             xbmcgui.Dialog().notification(
-                "Personal Build", "מאשר Trakt — אנא המתן...",
-                xbmcgui.NOTIFICATION_INFO, 4000
+                "Personal Build",
+                "מחבר Trakt — אנא המתן...",
+                xbmcgui.NOTIFICATION_INFO,
+                4000
             )
+            xbmc.sleep(1000)
             xbmc.executebuiltin("RunScript(script.trakt,authorize)")
-    except Exception:
-        pass  # Trakt not installed yet, skip silently
+        else:
+            xbmc.log("[Personal Build] Trakt already authorized, skipping.", xbmc.LOGINFO)
+    except Exception as e:
+        # Trakt not installed yet — silent skip
+        xbmc.log(f"[Personal Build] autoexec: Trakt check skipped: {e}", xbmc.LOGWARNING)
 
+
+# Give Kodi 2 seconds to fully initialize
 xbmc.sleep(2000)
-check_trakt()
+check_trakt_auth()

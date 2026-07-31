@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="General">
+    <setting id="system_profile" type="enum" label="System Profile" values="Light System|Heavy System" default="0" />
+    <setting id="user_key_override" type="text" label="User Key Override (optional)" default="" />
+  </category>
+</settings>
