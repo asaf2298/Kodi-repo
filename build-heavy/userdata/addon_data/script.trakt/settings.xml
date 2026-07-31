@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <setting id="authorization.token"></setting>
+  <setting id="authorization.refresh"></setting>
+
+  <!-- Sync behaviour -->
+  <setting id="sync.startup">true</setting>
+  <setting id="sync.interval">12</setting>
+  <setting id="sync.watched">true</setting>
+  <setting id="sync.collection">true</setting>
+  <setting id="sync.ratings">true</setting>
+  <setting id="sync.playback">true</setting>
+  <setting id="sync.progress">true</setting>
+
+  <!-- Extended public lists for heavy profile -->
+  <setting id="list.1.enabled">true</setting>
+  <setting id="list.1.slug">trending-movies</setting>
+  <setting id="list.1.user">trakt</setting>
+
+  <setting id="list.2.enabled">true</setting>
+  <setting id="list.2.slug">trending-shows</setting>
+  <setting id="list.2.user">trakt</setting>
+
+  <setting id="list.3.enabled">true</setting>
+  <setting id="list.3.slug">popular-movies</setting>
+  <setting id="list.3.user">trakt</setting>
+
+  <setting id="list.4.enabled">true</setting>
+  <setting id="list.4.slug">popular-shows</setting>
+  <setting id="list.4.user">trakt</setting>
+
+  <setting id="list.5.enabled">true</setting>
+  <setting id="list.5.slug">best-movies-of-2024</setting>
+  <setting id="list.5.user">linusgavert</setting>
+
+  <setting id="list.6.enabled">true</setting>
+  <setting id="list.6.slug">imdb-top-250-movies</setting>
+  <setting id="list.6.user">linusgavert</setting>
+
+  <setting id="list.7.enabled">true</setting>
+  <setting id="list.7.slug">imdb-top-rated-tv-shows</setting>
+  <setting id="list.7.user">linusgavert</setting>
+
+  <setting id="list.8.enabled">true</setting>
+  <setting id="list.8.slug">anime-movies</setting>
+  <setting id="list.8.user">liamdc</setting>
+
+  <setting id="list.9.enabled">true</setting>
+  <setting id="list.9.slug">top-anime-series</setting>
+  <setting id="list.9.user">liamdc</setting>
+
+  <setting id="list.10.enabled">true</setting>
+  <setting id="list.10.slug">oscar-best-picture-winners</setting>
+  <setting id="list.10.user">linusgavert</setting>
+
+  <setting id="list.11.enabled">true</setting>
+  <setting id="list.11.slug">box-office-hits</setting>
+  <setting id="list.11.user">trakt</setting>
+</settings>

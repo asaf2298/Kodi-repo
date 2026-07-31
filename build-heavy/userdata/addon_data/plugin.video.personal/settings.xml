@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <!-- 0 = Light System, 1 = Heavy System -->
+  <setting id="system_profile">1</setting>
+  <setting id="user_key_override"></setting>
+</settings>

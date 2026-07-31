@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+
+  <!-- Live TV - direct bypass to plugin, no skin menu -->
+  <shortcut>
+    <defaultID />
+    <label>שידור חי</label>
+    <label2>הרחבת וידאו</label2>
+    <icon>DefaultShortcut.png</icon>
+    <thumb>thumb</thumb>
+    <action>ActivateWindow(Videos,"plugin://plugin.video.personal/?action=type_root&amp;type=tv",return)</action>
+  </shortcut>
+
+  <!-- Movies -->
+  <shortcut>
+    <defaultID />
+    <label>סרטים</label>
+    <label2>הרחבת וידאו</label2>
+    <icon>DefaultShortcut.png</icon>
+    <thumb>thumb</thumb>
+    <action>ActivateWindow(Videos,"plugin://plugin.video.personal/?action=type_root&amp;type=movie",return)</action>
+  </shortcut>
+
+  <!-- Series -->
+  <shortcut>
+    <defaultID />
+    <label>סדרות</label>
+    <label2>הרחבת וידאו</label2>
+    <icon>DefaultShortcut.png</icon>
+    <thumb>thumb</thumb>
+    <action>ActivateWindow(Videos,"plugin://plugin.video.personal/?action=type_root&amp;type=series",return)</action>
+  </shortcut>
+
+  <!-- Anime -->
+  <shortcut>
+    <defaultID />
+    <label>אנימה</label>
+    <label2>הרחבת וידאו</label2>
+    <icon>DefaultShortcut.png</icon>
+    <thumb>thumb</thumb>
+    <action>ActivateWindow(Videos,"plugin://plugin.video.personal/?action=type_root&amp;type=anime",return)</action>
+  </shortcut>
+
+  <!-- Trakt -->
+  <shortcut>
+    <defaultID>script.trakt</defaultID>
+    <label>מעקב צפייה</label>
+    <label2>תוכנה</label2>
+    <icon>DefaultAddon.png</icon>
+    <thumb>thumb</thumb>
+    <action>RunAddOn(script.trakt)</action>
+  </shortcut>
+
+  <!-- Settings -->
+  <shortcut>
+    <defaultID>settings</defaultID>
+    <label>הגדרות</label>
+    <label2>Common Shortcut</label2>
+    <icon>special://skin/extras/icons/settings.png</icon>
+    <thumb />
+    <action>ActivateWindow(Settings)</action>
+  </shortcut>
+
+  <!-- Power -->
+  <shortcut>
+    <defaultID>power</defaultID>
+    <label>כיבוי</label>
+    <label2>Common Shortcut</label2>
+    <icon>special://skin/extras/icons/power.png</icon>
+    <thumb />
+    <action>ActivateWindow(shutdownmenu)</action>
+  </shortcut>
+
+</shortcuts>
