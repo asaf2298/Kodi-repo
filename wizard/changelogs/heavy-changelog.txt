@@ -1,0 +1,12 @@
+Heavy System Build - Changelog
+================================
+
+v1.0 (2026-07-31)
+-----------------
+- Initial release
+- plugin.video.personal v1.5.0
+- Skin: Arctic Horizon 2
+- Profile: everything (30 streams, all sources, unlimited size)
+- Auto Hebrew subtitles via /api/subtitles path
+- Trakt auto-authorization on first boot via autoexec.py
+- Optimized for PC, Nvidia Shield, and powerful devices

@@ -1,0 +1,12 @@
+Light System Build - Changelog
+===============================
+
+v1.0 (2026-07-31)
+-----------------
+- Initial release
+- plugin.video.personal v1.5.0
+- Skin: Arctic Zephyr Mod
+- Profile: friends_light (10 streams, cached sources only, 30GB cap)
+- Auto Hebrew subtitles via /api/subtitles path
+- Trakt auto-authorization on first boot via autoexec.py
+- Optimized for Android TV, FireStick, and low-power devices

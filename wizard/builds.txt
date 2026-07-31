@@ -1,0 +1,27 @@
+<build>
+url="https://github.com/asaf2298/Kodi-repo/raw/main/wizard/zips/personal-build-light-v1.0.zip"
+name="Light System Build"
+version="1.0"
+description="Optimized for Android TV and FireStick. Faster loading, curated catalogs, automatic Hebrew subtitles. Uses Arctic Zephyr Mod skin."
+info="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/changelogs/light-changelog.txt"
+adult="no"
+kodi="20.0"
+theme="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/theme.zip"
+icon="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/icon.png"
+fanart="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/fanart.jpg"
+preview="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/preview-light.jpg"
+</build>
+
+<build>
+url="https://github.com/asaf2298/Kodi-repo/raw/main/wizard/zips/personal-build-heavy-v1.0.zip"
+name="Heavy System Build"
+version="1.0"
+description="Full catalog depth for PC and Nvidia Shield. Maximum stream quality, all sources enabled, Arctic Horizon 2 skin. Slower initial load."
+info="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/changelogs/heavy-changelog.txt"
+adult="no"
+kodi="20.0"
+theme="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/theme.zip"
+icon="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/icon.png"
+fanart="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/fanart.jpg"
+preview="https://raw.githubusercontent.com/asaf2298/Kodi-repo/main/wizard/preview-heavy.jpg"
+</build>
