@@ -8,7 +8,7 @@
 # -----------------------------------------------------------------------
 
 param([string]$Version = "1.0")
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 function OK($m)   { Write-Host "  [OK] $m" -ForegroundColor Green }
 function WARN($m) { Write-Host "  [!!] $m" -ForegroundColor Yellow }
@@ -19,10 +19,9 @@ function ERR($m)  { Write-Host "`n  [X] $m" -ForegroundColor Red; Read-Host "Pre
 HEAD "Personal Kodi Build Packager"
 
 # ── Detect paths from THIS script's location (inside addons/) ──────────────
-$AddonsDir   = $PSScriptRoot                    # the addons folder this script is in
-$KodiRoot    = Split-Path $AddonsDir -Parent    # one level up = Kodi root
-$UserDataDir = Join-Path $KodiRoot "userdata"   # Kodi/userdata
-$RepoDir     = $PSScriptRoot                    # repo files expected alongside addons
+$AddonsDir   = $PSScriptRoot
+$KodiRoot    = Split-Path $AddonsDir -Parent
+$UserDataDir = Join-Path $KodiRoot "userdata"
 
 INFO "Detected Kodi root : $KodiRoot"
 INFO "Addons folder      : $AddonsDir"
@@ -32,7 +31,7 @@ if (-not (Test-Path $UserDataDir)) {
 }
 OK "Kodi userdata found."
 
-# ── Find the cloned repo (looks next to Kodi root, or prompts) ────────────
+# ── Find the cloned repo ────────────────────────────────────────────────────
 $RepoCandidates = @(
   (Join-Path (Split-Path $KodiRoot -Parent) "kodi-repo"),
   (Join-Path $env:USERPROFILE "kodi-repo"),
@@ -55,7 +54,7 @@ if (-not $RepoRoot) {
 }
 OK "Repo root: $RepoRoot"
 
-# ── Addon lists ─────────────────────────────────────────────────────────
+# ── Addon lists ──────────────────────────────────────────────────────────────
 $SharedAddons = @(
   "plugin.program.iptv.merge",
   "plugin.program.openwizard",
@@ -75,7 +74,7 @@ $HeavyOnly = @(
   "slyguy.roku"
 )
 
-# ── Build function ─────────────────────────────────────────────────────────────────
+# ── Build function ───────────────────────────────────────────────────────────
 function Build-Zip($profile) {
   HEAD "Building [$($profile.ToUpper())] ZIP..."
   $tmp = Join-Path $env:TEMP "kodi-personal-$profile"
@@ -83,12 +82,13 @@ function Build-Zip($profile) {
   New-Item -ItemType Directory "$tmp\addons"   | Out-Null
   New-Item -ItemType Directory "$tmp\userdata" | Out-Null
 
-  # 1. Shared addons from THIS addons folder
+  # 1. Shared addons
   HEAD "  [1/5] Copying shared addons..."
   foreach ($a in $SharedAddons) {
     $src = Join-Path $AddonsDir $a
     if (Test-Path $src) {
-      Copy-Item $src "$tmp\addons\$a" -Recurse; OK $a
+      Copy-Item $src "$tmp\addons\$a" -Recurse
+      OK $a
     } else {
       WARN "$a not found — skipped"
     }
@@ -100,29 +100,31 @@ function Build-Zip($profile) {
     foreach ($a in $HeavyOnly) {
       $src = Join-Path $AddonsDir $a
       if (Test-Path $src) {
-        Copy-Item $src "$tmp\addons\$a" -Recurse; OK $a
+        Copy-Item $src "$tmp\addons\$a" -Recurse
+        OK $a
       } else {
         WARN "$a not found — skipped"
       }
     }
   }
 
-  # 3. plugin.video.personal from REPO (always freshest version)
+  # 3. plugin.video.personal from REPO
   HEAD "  [3/5] Copying plugin.video.personal from repo..."
   Copy-Item (Join-Path $RepoRoot "plugin.video.personal") "$tmp\addons\plugin.video.personal" -Recurse
   OK "plugin.video.personal (repo version)"
 
-  # 4. Shared userdata (autoexec.py + shortcuts)
+  # 4. Shared userdata — FIX: no line continuation, single statements
   HEAD "  [4/5] Copying shared userdata..."
   Copy-Item (Join-Path $RepoRoot "build-shared\userdata\autoexec.py") "$tmp\userdata\autoexec.py"
   OK "autoexec.py"
   New-Item -ItemType Directory "$tmp\userdata\shortcuts" -Force | Out-Null
-  Copy-Item (Join-Path $RepoRoot "build-shared\userdata\shortcuts\mainmenu.DATA.xml") \
-            "$tmp\userdata\shortcuts\mainmenu.DATA.xml"
+  $shortcutSrc = Join-Path $RepoRoot "build-shared\userdata\shortcuts\mainmenu.DATA.xml"
+  $shortcutDst = "$tmp\userdata\shortcuts\mainmenu.DATA.xml"
+  Copy-Item $shortcutSrc $shortcutDst
   OK "mainmenu.DATA.xml"
 
-  # 5. Profile-specific userdata (addon_data + guisettings)
-  HEAD "  [5/5] Copying profile userdata..."
+  # 5. Profile-specific userdata
+  HEAD "  [5/5] Copying $profile profile userdata..."
   $profileUD = Join-Path $RepoRoot "build-$profile\userdata"
   Copy-Item (Join-Path $profileUD "addon_data") "$tmp\userdata\addon_data" -Recurse
   OK "addon_data/"
@@ -138,16 +140,17 @@ function Build-Zip($profile) {
   OK "Saved to Desktop: $zipName ($sizeMB MB)"
 
   Remove-Item $tmp -Recurse -Force
-  return $zipPath
 }
 
-# ── Run ─────────────────────────────────────────────────────────────────────────
+# ── Run both ─────────────────────────────────────────────────────────────────
 Build-Zip "light"
 Build-Zip "heavy"
 
 HEAD "✅ Done! Both ZIPs are on your Desktop."
 Write-Host ""
-Write-Host "  Next: upload them to GitHub at:" -ForegroundColor Cyan
-Write-Host "  kodi-repo/wizard/zips/" -ForegroundColor Cyan
+Write-Host "  personal-build-light-v$Version.zip" -ForegroundColor Green
+Write-Host "  personal-build-heavy-v$Version.zip" -ForegroundColor Green
+Write-Host ""
+Write-Host "  Next: drag both ZIPs to GitHub -> kodi-repo/wizard/zips/" -ForegroundColor Cyan
 Write-Host ""
 Read-Host "Press Enter to exit"
