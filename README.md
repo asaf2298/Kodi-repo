@@ -1,19 +1,29 @@
-# Personal Kodi Build — plugin.video.personal
+# Kodi-repo
 
-## Quick Install (Automated)
-```bash
-# Windows — double-click or run:
-python install.py
+A personal, pre-configured Kodi build system with two install profiles — **Light** and **Heavy** — designed for one-click setup via OpenWizard.
 
-# Linux / macOS
-./install.sh
+## What's Inside
 
-# Install a specific profile directly
-python install.py light
-python install.py heavy
-```
-The installer auto-detects your Kodi userdata path on Windows, macOS, Linux, LibreELEC, and Android.
+| Folder | Purpose |
+|---|---|
+| `plugin.video.personal/` | Custom video addon, always packaged at its latest version |
+| `build-shared/` | Userdata shared by both profiles (autoexec, shortcuts) |
+| `build-light/` | Light profile userdata (addon_data, guisettings) |
+| `build-heavy/` | Heavy profile userdata + extra slyguy providers |
+| `wizard/` | OpenWizard manifest + packaged ZIPs |
 
+## The Two Builds
+
+Both profiles use the **same skin** (`skin.arctic.zephyr.mod`). They differ only in performance settings and addon set:
+
+| | Light | Heavy |
+|---|---|---|
+| Target device | Android TV, FireStick | PC, Nvidia Shield |
+| Power mode | Low-power (animations/fanart off) | Full quality (animations/fanart on) |
+| Extra addons | — | Pluto TV, Roku providers |
+| Load time | Faster | Slower initial load |
+
+## Install via OpenWizard
 ## OpenWizard Manifest URL
 For OpenWizard-based installs, add this source:
 ```
