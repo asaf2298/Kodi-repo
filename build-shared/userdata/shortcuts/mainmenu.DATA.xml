@@ -41,6 +41,16 @@
     <action>ActivateWindow(Videos,"plugin://plugin.video.personal/?action=type_root&amp;type=anime",return)</action>
   </shortcut>
 
+  <!-- Search -->
+  <shortcut>
+    <defaultID>search</defaultID>
+    <label>חיפוש</label>
+    <label2>Common Shortcut</label2>
+    <icon>DefaultAddon.png</icon>
+    <thumb></thumb>
+    <action>RunScript(script.globalsearch,movies=true&amp;tvshows=true)</action>
+  </shortcut>
+  
   <!-- Trakt -->
   <shortcut>
     <defaultID>script.trakt</defaultID>
