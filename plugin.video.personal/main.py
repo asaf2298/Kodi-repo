@@ -73,6 +73,21 @@ def build_url(query):
     return sys.argv[0] + "?" + urllib.parse.urlencode(query)
 
 
+def build_external_url(addon_id, route, **params):
+    """
+    Build a plugin:// URL for a route in another installed addon (SlyGuy's
+    Pluto/Roku providers), matching script.module.slyguy's own router.build_url()
+    encoding exactly: the route name goes in the '_' param, then every param is
+    urlencoded together sorted by key. Confirmed against the real addon source
+    (script.module.slyguy/resources/modules/slyguy/router.py) and against how
+    each addon's own home menu links to itself (e.g. plugin.url_for(live_tv)).
+    """
+    all_params = {"_": route}
+    all_params.update(params)
+    query = urllib.parse.urlencode(sorted(all_params.items()))
+    return f"plugin://{addon_id}/?{query}"
+
+
 def get_params():
     return dict(urllib.parse.parse_qsl(sys.argv[2][1:]))
 
@@ -110,7 +125,52 @@ def list_root():
     xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
 
-def list_live_tv():
+PLUTO_NEWS_GROUP = "News + Opinion"  # matches i.mjh.nz/PlutoTV's real "us" channel group tag
+
+
+def list_live_tv_root():
+    """
+    Live TV landing: 3 rows -- Kan-Box (Israeli, via our own backend), Pluto TV
+    US News (deep link into the real bundled addon's own channel-group folder,
+    no reimplementation), and Roku (its own Live TV + Search, one level down).
+    """
+    xbmcplugin.setContent(ADDON_HANDLE, "files")
+
+    li = xbmcgui.ListItem(label="ערוצים חיים - ישראל (Kan-Box)")
+    li.setIsFolder(True)
+    xbmcplugin.addDirectoryItem(ADDON_HANDLE, build_url({"action": "live_tv_kanbox"}), li, True)
+
+    li = xbmcgui.ListItem(label="חדשות ארה\"ב - Pluto TV")
+    li.setIsFolder(True)
+    xbmcplugin.addDirectoryItem(
+        ADDON_HANDLE,
+        build_external_url("slyguy.pluto.tv.provider", "live_tv", code="us", group=PLUTO_NEWS_GROUP),
+        li, True
+    )
+
+    li = xbmcgui.ListItem(label="Roku")
+    li.setIsFolder(True)
+    xbmcplugin.addDirectoryItem(ADDON_HANDLE, build_url({"action": "roku_root"}), li, True)
+
+    xbmcplugin.endOfDirectory(ADDON_HANDLE)
+
+
+def list_roku_root():
+    """Roku row's own sub-menu: its native Live TV browse and Search, unfiltered."""
+    xbmcplugin.setContent(ADDON_HANDLE, "files")
+
+    li = xbmcgui.ListItem(label="Live TV")
+    li.setIsFolder(True)
+    xbmcplugin.addDirectoryItem(ADDON_HANDLE, build_external_url("slyguy.roku", "live_tv"), li, True)
+
+    li = xbmcgui.ListItem(label="Search")
+    li.setIsFolder(True)
+    xbmcplugin.addDirectoryItem(ADDON_HANDLE, build_external_url("slyguy.roku", "search"), li, True)
+
+    xbmcplugin.endOfDirectory(ADDON_HANDLE)
+
+
+def list_live_tv_kanbox():
     xbmcplugin.setContent(ADDON_HANDLE, "videos")
     try:
         data = api_get(
@@ -153,6 +213,65 @@ def list_type_root(content_type):
         xbmcplugin.addDirectoryItem(
             ADDON_HANDLE,
             build_url({"action": "catalog", "type": cat["type"], "catalogId": cat["id"]}),
+            li, True
+        )
+    xbmcplugin.endOfDirectory(ADDON_HANDLE)
+
+
+# Pure-anime rows from AnimeIL (never Cinemeta -- its genre=Animation would mix
+# in non-anime Western cartoons). AnimeIL only accepts one genre per request, so
+# each row combines a few genres by fanning out and merging server-side
+# (api/kodi-catalog.js's list=anime_genres). Order and grouping as specified.
+ANIME_GENRE_ROWS = [
+    ("מדע בדיוני והרפתקאות", ["Sci-Fi", "Fantasy", "Action", "War", "Adventure"]),
+    ("מתח ואימה", ["Thriller", "Mystery", "Horror", "Crime", "Drama"]),
+    ("רומנטיקה וקומדיה", ["Romance", "Family", "Comedy"]),
+    ("מוזיקה וספורט", ["Music", "History", "Sport", "Short", "Animation"]),
+]
+
+
+def list_anime_root():
+    xbmcplugin.setContent(ADDON_HANDLE, "files")
+    for label, genre_list in ANIME_GENRE_ROWS:
+        li = xbmcgui.ListItem(label=label)
+        li.setIsFolder(True)
+        xbmcplugin.addDirectoryItem(
+            ADDON_HANDLE,
+            build_url({"action": "anime_genre_combo", "genres": ",".join(genre_list)}),
+            li, True
+        )
+    xbmcplugin.endOfDirectory(ADDON_HANDLE)
+
+
+def list_anime_genre_combo(genres_csv):
+    xbmcplugin.setContent(ADDON_HANDLE, "tvshows")
+    try:
+        data = api_get(
+            f"{BASE_URL}/api/kodi-catalog?userKey={get_active_token()}"
+            f"&list=anime_genres&genres={urllib.parse.quote(genres_csv)}"
+        )
+    except Exception as e:
+        show_error("שגיאת חיבור: " + str(e))
+        return
+    for item in data.get("items", []):
+        li = xbmcgui.ListItem(label=item["title"])
+        li.setArt({"poster": item.get("poster", ""), "fanart": item.get("fanart", "")})
+        li.setInfo("video", {
+            "title": item["title"],
+            "plot": item.get("plot", ""),
+            "year": item.get("year", ""),
+            "genre": item.get("genres", ""),
+        })
+        if item.get("imdb_id"):
+            li.setUniqueIDs({"imdb": item["imdb_id"]}, "imdb")
+        xbmcplugin.addDirectoryItem(
+            ADDON_HANDLE,
+            build_url({
+                "action": "streams",
+                "type": item["type"],
+                "imdb_id": item["imdb_id"],
+                "title": item["title"],
+            }),
             li, True
         )
     xbmcplugin.endOfDirectory(ADDON_HANDLE)
@@ -265,9 +384,17 @@ def router():
     elif action == "type_root":
         content_type = params.get("type", "movie")
         if content_type == "tv":
-            list_live_tv()
+            list_live_tv_root()
+        elif content_type == "anime":
+            list_anime_root()
         else:
             list_type_root(content_type)
+    elif action == "live_tv_kanbox":
+        list_live_tv_kanbox()
+    elif action == "roku_root":
+        list_roku_root()
+    elif action == "anime_genre_combo":
+        list_anime_genre_combo(params["genres"])
     elif action == "catalog":
         list_catalog_items(params["type"], params["catalogId"])
     elif action == "streams":
