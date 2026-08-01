@@ -22,7 +22,6 @@ Personal Kodi build system for asaf2298. Generates two prebuilt Kodi packages (L
 
 ## Deploying New Builds
 
-After running the packaging script:
 ```powershell
 git add wizard/zips/personal-build-light-v1.0.zip wizard/zips/personal-build-heavy-v1.0.zip
 git commit -m "Add build ZIPs"
@@ -36,7 +35,8 @@ Note: GitHub's web drag-and-drop uploader caps at 25MB — always push via git C
 - `$ErrorActionPreference = "Stop"` will silently kill the whole script on any error — prefer `"Continue"` with explicit error checks.
 - The repo root passed to the script must contain `plugin.video.personal`, `build-shared`, `build-light`, and `build-heavy` — never point it at the Kodi `addons` folder itself.
 - Git identity must be configured once per machine: `git config --global user.email "..."` and `git config --global user.name "..."`.
+- Both Light and Heavy profiles use the same skin (`skin.arctic.zephyr.mod`). They differ in performance settings (LowPowerMode) and addon set (Heavy adds slyguy.pluto.tv.provider + slyguy.roku), NOT in skin choice.
 
 ## OpenWizard Manifest
 
-`wizard/builds.txt` lists build metadata pointing to `wizard/zips/*.zip`. Both ZIPs must be present in that path (or migrated to GitHub Releases) for the wizard install flow to work.
+`wizard/builds.txt` lists build metadata pointing to `wizard/zips/*.zip`. Verify referenced assets exist: `theme.zip`, `icon.png`, `fanart.jpg`, `preview-light.jpg`, `preview-heavy.jpg`, and both changelog files under `wizard/changelogs/`.
