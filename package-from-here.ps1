@@ -55,6 +55,9 @@ if (-not $RepoRoot) {
 OK "Repo root: $RepoRoot"
 
 # ── Addon lists ──────────────────────────────────────────────────────────────
+# slyguy.pluto.tv.provider / slyguy.roku moved here from $HeavyOnly: both Light
+# and Heavy now get Pluto/Roku Live TV rows (see plugin.video.personal/main.py's
+# list_live_tv_root/list_roku_root, which deep-link into these).
 $SharedAddons = @(
   "plugin.program.iptv.merge",
   "plugin.program.openwizard",
@@ -67,12 +70,11 @@ $SharedAddons = @(
   "script.skinshortcuts",
   "script.trakt",
   "skin.arctic.zephyr.mod",
-  "skin.estuary"
-)
-$HeavyOnly = @(
+  "skin.estuary",
   "slyguy.pluto.tv.provider",
   "slyguy.roku"
 )
+$HeavyOnly = @()
 
 # ── Build function ───────────────────────────────────────────────────────────
 function Build-Zip($profile) {
