@@ -69,3 +69,18 @@ Newlines/tabs are stripped from the whole file before matching, and it is a sing
 `theme=` (when set) must point to a **parseable theme-list manifest** (matching `name="..."` entries, checked by `BuildMenu().theme_count()`), not a raw `.zip` -- a prior version of this file pointed `theme=` at a `wizard/theme.zip` that both didn't exist (404) and wasn't the right format either way. Currently set to `theme=""` (no extra theme package) since there's no such manifest built. A missing/invalid theme is harmless either way -- `theme_count()` returns 0 and the theme-install sub-step is silently skipped without blocking the rest of the build install.
 
 Assets actually needed to exist for the manifest to work end-to-end: `icon.png`, `fanart.jpg`, `preview-light.jpg`, `preview-heavy.jpg`, and both changelog files under `wizard/changelogs/` -- `theme.zip` is not needed anymore.
+
+## Server-side profile this client gets
+
+`plugin.video.personal` is served by `UserManager`'s `api/kodi.js` / `api/kodi-catalog.js`, which rank with the **`kodi` profile** (`lib/streamRanker.js`). Worth knowing when a row list looks wrong:
+
+- `target: 100` — a long flat list, unlike the 10-row Stremio profiles.
+- `clientClass: 'capable'` — HEVC/AV1/HDR/TrueHD are **not** penalised for compatibility the way they are for generic clients, because Kodi handles them.
+- `caps.vip = 2` still applies, so Kan-Box contributes at most 2 rows regardless of `target: 100`.
+- `reservations: []` — the Kodi profile is pure marginal-gain fill; there are no reserved slots.
+
+If streams appear missing from Kodi but present in Stremio (or vice versa), check the profile difference before suspecting this addon.
+
+## Related
+
+Aggregator-side audit findings: asaf2298/UserManager#62. Note in particular that a telemetry defect currently caps **every** provider at 1–5 rows regardless of profile (#54).
